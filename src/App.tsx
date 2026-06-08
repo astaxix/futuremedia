@@ -8,7 +8,18 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
   <motion.div
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-50px" }}
+    viewport={{ once: true, amount: 0.2 }}
+    transition={{ duration: 0.6, delay }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
+const HeroFadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.6, delay }}
     className={className}
   >
@@ -44,19 +55,19 @@ export default function App() {
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-brand/20 blur-[120px] rounded-full pointer-events-none"></div>
           
           <div className="mx-auto max-w-6xl px-6 relative z-10 text-center">
-            <FadeIn>
+            <HeroFadeIn>
               <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight mb-6 leading-[1.1] max-w-4xl mx-auto">
                 Mehr Kunden für dein Unternehmen durch <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-light">moderne Webseiten.</span>
               </h1>
-            </FadeIn>
+            </HeroFadeIn>
             
-            <FadeIn delay={0.1}>
+            <HeroFadeIn delay={0.1}>
               <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto mb-10">
                 Wir erstellen Webseiten, die Vertrauen aufbauen und Anfragen automatisch generieren.
               </p>
-            </FadeIn>
+            </HeroFadeIn>
             
-            <FadeIn delay={0.2} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <HeroFadeIn delay={0.2} className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a href="#kontakt" className="w-full sm:w-auto font-display bg-gradient-to-r from-brand to-brand-light text-white font-semibold py-4 px-8 rounded-full transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:shadow-[0_0_30px_rgba(59,130,246,0.6)] hover:scale-[1.03] flex items-center justify-center gap-2">
                 Kostenlose Beratung
                 <ArrowRight className="h-5 w-5" />
@@ -65,10 +76,10 @@ export default function App() {
                 <MessageCircle className="h-5 w-5 fill-current" />
                 WhatsApp schreiben
               </a>
-            </FadeIn>
+            </HeroFadeIn>
 
             {/* Laptop Mockup Visual */}
-            <FadeIn delay={0.4} className="mt-20 max-w-5xl mx-auto">
+            <HeroFadeIn delay={0.4} className="mt-20 max-w-5xl mx-auto">
               <div className="relative rounded-t-2xl bg-slate-800/40 p-2 sm:p-4 border border-b-0 border-slate-700/50 backdrop-blur-md mx-4 sm:mx-12 shadow-[0_8px_40px_rgb(0,0,0,0.3)]">
                 <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-2.5 rounded-full bg-[#0F172A]"></div>
                 <div className="rounded-lg overflow-hidden border border-slate-700/50 aspect-[16/10] bg-[#0F172A] relative">
@@ -96,7 +107,7 @@ export default function App() {
               <div className="h-4 bg-slate-700 rounded-b-xl max-w-5xl w-full mx-auto shadow-2xl relative">
                  <div className="absolute left-1/2 -translate-x-1/2 top-0 w-32 h-1 bg-slate-600 rounded-b-md"></div>
               </div>
-            </FadeIn>
+            </HeroFadeIn>
           </div>
         </section>
 
@@ -237,7 +248,7 @@ export default function App() {
                 <ul className="space-y-5 mb-8">
                   {['Alles aus Starter', 'Terminbuchung', 'WhatsApp Integration', 'SEO Basics'].map((text, i) => (
                     <li key={i} className="flex gap-3 text-white font-medium">
-                      <Check className="h-6 w-6 text-brand_light text-brand shrink-0" />
+                      <Check className="h-6 w-6 text-brand-light shrink-0" />
                       <span>{text}</span>
                     </li>
                   ))}
