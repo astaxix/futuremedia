@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import {
   Zap, Check, X, Smartphone, Search, ShieldCheck, Star, 
@@ -24,6 +24,14 @@ const HeroFadeIn: React.FC<{ children: React.ReactNode, delay?: number, classNam
 );
 
 export default function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState('');
+
+  const openModal = (plan: string) => {
+    setSelectedPlan(plan);
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen font-sans text-slate-200">
       {/* Navigation */}
@@ -230,6 +238,12 @@ export default function App() {
                     </li>
                   ))}
                 </ul>
+                <button 
+                  onClick={() => openModal('Starter')}
+                  className="block text-center w-full font-display font-medium border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 py-4 rounded-xl transition-colors"
+                >
+                  Jetzt starten
+                </button>
               </FadeIn>
 
               {/* Business (HIGHLIGHT) */}
@@ -249,9 +263,12 @@ export default function App() {
                     </li>
                   ))}
                 </ul>
-                <a href="#kontakt" className="block text-center w-full font-display font-semibold bg-gradient-to-r from-brand to-brand-light text-white py-4 rounded-xl hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-shadow">
+                <button 
+                  onClick={() => openModal('Business')}
+                  className="block text-center w-full font-display font-semibold bg-gradient-to-r from-brand to-brand-light text-white py-4 rounded-xl hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-shadow"
+                >
                   Jetzt starten
-                </a>
+                </button>
               </FadeIn>
 
               {/* Premium */}
@@ -268,6 +285,12 @@ export default function App() {
                     </li>
                   ))}
                 </ul>
+                <button 
+                  onClick={() => openModal('Premium')}
+                  className="block text-center w-full font-display font-medium border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 py-4 rounded-xl transition-colors"
+                >
+                  Jetzt starten
+                </button>
               </FadeIn>
 
             </div>
@@ -503,6 +526,44 @@ export default function App() {
           Jetzt schreiben
         </span>
       </a>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={() => setIsModalOpen(false)}></div>
+          <div className="relative bg-[#0F172A] border border-slate-700/50 rounded-3xl w-full max-w-lg p-8 shadow-2xl">
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-6 right-6 text-slate-400 hover:text-white transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <h3 className="font-display text-2xl font-bold text-white mb-2 tracking-tight">Kostenlose Erstberatung</h3>
+            <p className="text-slate-400 mb-8 leading-relaxed font-medium">Für das Paket <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-light font-bold">{selectedPlan}</span>. Wir melden uns umgehend bei dir.</p>
+            
+            <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); setIsModalOpen(false); }}>
+              <div>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">Name / Firma</label>
+                <input type="text" required className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder:text-slate-500 focus:outline-none focus:border-brand transition-colors" placeholder="Max Mustermann" />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">E-Mail</label>
+                <input type="email" required className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder:text-slate-500 focus:outline-none focus:border-brand transition-colors" placeholder="max@beispiel.de" />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">Telefonnummer (optional)</label>
+                <input type="tel" className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder:text-slate-500 focus:outline-none focus:border-brand transition-colors" placeholder="+49 123 456789" />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">Deine Checkliste / Wünsche</label>
+                <textarea rows={3} className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder:text-slate-500 focus:outline-none focus:border-brand transition-colors resize-none" placeholder="Was möchtest du umsetzen?"></textarea>
+              </div>
+              <button type="submit" className="w-full font-display font-semibold bg-gradient-to-r from-brand to-brand-light text-white py-4 mt-2 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] hover:scale-[1.02] transition-all">
+                Jetzt Beratung buchen
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
