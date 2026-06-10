@@ -1,7 +1,6 @@
 {
-  "framework": "vite",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!assets/|.*\\.).*)", "destination": "/index.html" }
   ]
 }

@@ -17,15 +17,10 @@ const FadeIn: React.FC<{ children: React.ReactNode, delay?: number, className?: 
   </motion.div>
 );
 
-const HeroFadeIn: React.FC<{ children: React.ReactNode, delay?: number, className?: string }> = ({ children, delay = 0, className = "" }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay }}
-    className={className}
-  >
+const HeroFadeIn: React.FC<{ children: React.ReactNode, delay?: number, className?: string }> = ({ children, className = "" }) => (
+  <div className={className}>
     {children}
-  </motion.div>
+  </div>
 );
 
 export default function App() {
