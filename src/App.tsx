@@ -26,6 +26,7 @@ const HeroFadeIn: React.FC<{ children: React.ReactNode, delay?: number, classNam
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState('');
+  const [legalPage, setLegalPage] = useState<'impressum' | 'datenschutz' | 'agb' | null>(null);
 
   const openModal = (plan: string) => {
     setSelectedPlan(plan);
@@ -503,8 +504,9 @@ export default function App() {
                 <span>FutureMedia <span className="text-brand">Network</span></span>
               </div>
               <div className="flex flex-wrap justify-center gap-8 text-sm text-slate-400 font-medium">
-                <a href="#" className="hover:text-white transition-colors">Impressum</a>
-                <a href="#" className="hover:text-white transition-colors">Datenschutz</a>
+                <button onClick={() => setLegalPage('impressum')} className="hover:text-white transition-colors">Impressum</button>
+                <button onClick={() => setLegalPage('datenschutz')} className="hover:text-white transition-colors">Datenschutz</button>
+                <button onClick={() => setLegalPage('agb')} className="hover:text-white transition-colors">AGB</button>
                 <a href="#kontakt" className="hover:text-white transition-colors">Kontakt</a>
               </div>
            </div>
@@ -561,6 +563,95 @@ export default function App() {
                 Jetzt Beratung buchen
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {legalPage && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={() => setLegalPage(null)}></div>
+          <div className="relative bg-[#0F172A] border border-slate-700/50 rounded-3xl w-full max-w-2xl max-h-[80vh] flex flex-col shadow-2xl">
+            <div className="p-6 md:p-8 pb-4 flex justify-between items-center border-b border-slate-800 shrink-0">
+              <h3 className="font-display text-2xl font-bold text-white tracking-tight uppercase">
+                {legalPage === 'impressum' && 'Impressum'}
+                {legalPage === 'datenschutz' && 'Datenschutzerklärung'}
+                {legalPage === 'agb' && 'Allgemeine Geschäftsbedingungen'}
+              </h3>
+              <button 
+                onClick={() => setLegalPage(null)}
+                className="text-slate-400 hover:text-white transition-colors p-2 -mr-2"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            
+            <div className="p-6 md:p-8 overflow-y-auto text-slate-300 text-sm leading-relaxed space-y-6">
+              {legalPage === 'impressum' && (
+                <div>
+                  <h4 className="text-lg font-bold text-white mb-2">Angaben gemäß § 5 TMG</h4>
+                  <p>Max Mustermann<br/>FutureMedia Network<br/>Musterstraße 1<br/>12345 Musterstadt</p>
+                  
+                  <h4 className="text-lg font-bold text-white mb-2 mt-6">Kontakt</h4>
+                  <p>Telefon: +49 123 456 789<br/>E-Mail: hallo@futuremedia.network</p>
+                  
+                  <h4 className="text-lg font-bold text-white mb-2 mt-6">Umsatzsteuer-ID</h4>
+                  <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br/>DE999999999</p>
+
+                  <h4 className="text-lg font-bold text-white mb-2 mt-6">Verbraucherstreitbeilegung/Universalschlichtungsstelle</h4>
+                  <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+                  <p className="mt-8 text-xs text-slate-500 italic">Hinweis: Dies ist ein Muster-Impressum. Bitte passen Sie die Daten entsprechend Ihrem Unternehmen an.</p>
+                </div>
+              )}
+
+              {legalPage === 'datenschutz' && (
+                <div>
+                  <h4 className="text-lg font-bold text-white mb-2">1. Datenschutz auf einen Blick</h4>
+                  <p className="mb-4"><strong>Allgemeine Hinweise</strong><br/>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
+                  
+                  <h4 className="text-lg font-bold text-white mb-2">2. Datenerfassung auf dieser Website</h4>
+                  <p className="mb-4"><strong>Wer ist verantwortlich für die Datenerfassung?</strong><br/>Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Impressum dieser Website entnehmen.</p>
+                  
+                  <p className="mb-4"><strong>Wie erfassen wir Ihre Daten?</strong><br/>Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z. B. um Daten handeln, die Sie in ein Kontaktformular eingeben. Andere Daten werden automatisch beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs).</p>
+
+                  <h4 className="text-lg font-bold text-white mb-2">3. Hinweis zur verantwortlichen Stelle</h4>
+                  <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
+                  <p className="mt-2">FutureMedia Network<br/>Musterstraße 1<br/>12345 Musterstadt<br/>Telefon: +49 123 456 789<br/>E-Mail: hallo@futuremedia.network</p>
+
+                  <p className="mt-8 text-xs text-slate-500 italic">Hinweis: Dies ist ein Mustertext. Bitte durch Ihre rechtssichere Datenschutzerklärung ersetzen.</p>
+                </div>
+              )}
+
+              {legalPage === 'agb' && (
+                <div>
+                  <h4 className="text-lg font-bold text-white mb-2">§1 Geltungsbereich</h4>
+                  <p className="mb-4">Für die Geschäftsbeziehung zwischen FutureMedia Network (nachfolgend „Auftragnehmer“) und dem Kunden (nachfolgend „Kunde“) gelten ausschließlich die nachfolgenden Allgemeinen Geschäftsbedingungen in ihrer zum Zeitpunkt der Beauftragung gültigen Fassung.</p>
+                  
+                  <h4 className="text-lg font-bold text-white mb-2">§2 Vertragsschluss</h4>
+                  <p className="mb-4">Unsere Angebote sind freibleibend und unverbindlich. Ein Vertrag kommt erst durch unsere schriftliche Auftragsbestätigung (auch per E-Mail) oder durch Beginn der Leistungsausführung zustande.</p>
+                  
+                  <h4 className="text-lg font-bold text-white mb-2">§3 Leistungen des Auftragnehmers</h4>
+                  <p className="mb-4">Der Auftragnehmer erbringt Dienstleistungen im Bereich Webdesign, Webentwicklung und Online-Marketing gemäß individueller Vereinbarung. Die genauen Leistungspflichten ergeben sich aus dem jeweiligen Angebotspaket.</p>
+
+                  <h4 className="text-lg font-bold text-white mb-2">§4 Mitwirkungspflichten des Kunden</h4>
+                  <p className="mb-4">Der Kunde verpflichtet sich, dem Auftragnehmer rechtzeitig alle für die Ausführung notwendigen Unterlagen, Informationen und Zugangsdaten bereitzustellen.</p>
+
+                  <h4 className="text-lg font-bold text-white mb-2">§5 Vergütung und Zahlungsbedingungen</h4>
+                  <p className="mb-4">Alle Preise verstehen sich netto zuzüglich der gesetzlichen Mehrwertsteuer. Rechnungen sind ohne Abzug innerhalb von 14 Tagen nach Rechnungsstellung zur Zahlung fällig.</p>
+
+                  <p className="mt-8 text-xs text-slate-500 italic">Hinweis: Dies sind Muster-AGB. Bitte durch Ihre eigenen rechtsgeprüften AGB ersetzen.</p>
+                </div>
+              )}
+            </div>
+            
+            <div className="p-6 border-t border-slate-800 bg-slate-900/50 rounded-b-3xl">
+              <button 
+                onClick={() => setLegalPage(null)}
+                className="w-full bg-slate-800 hover:bg-slate-700 text-white font-medium py-3 rounded-xl transition-colors"
+              >
+                Schließen
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -12,7 +12,12 @@
     </noscript>
   </head>
   <body class="bg-[#0F172A] text-slate-50 antialiased">
-    <div id="root"></div>
+    <div id="root">
+      <div style="display: flex; align-items: center; justify-content: center; height: 100vh; background-color: #0F172A; flex-direction: column; gap: 1rem;">
+        <div style="width: 40px; height: 40px; border: 3px solid rgba(255, 255, 255, 0.1); border-radius: 50%; border-top-color: #3b82f6; animation: spin 1s ease-in-out infinite;"></div>
+        <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
